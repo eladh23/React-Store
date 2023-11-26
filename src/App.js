@@ -13,13 +13,12 @@ import MyFooter from "./components/MyFooter";
 //import { Alert } from "react-bootstrap";
 
 function App() {
-	// "https://django-rest-product.onrender.com/product?category="
+
 	const HOST_URL = "https://elad-django-back.onrender.com";
 	const [categories, setCategories] = useState([]);
 	const [currentCategory, setCurrentCategory] = useState(1);
 	const [products, setProducts] = useState([]);
-	// const [message, setMessage] = useState("");
-	// const [showAlert, setShowAlert] = useState(false);
+	
 
 	useEffect(getProducts, [currentCategory]); // when loading the page for the first time - getProducts()
 	useEffect(getCategories, []); // when loading the page for the first time - getCategories()
@@ -76,7 +75,7 @@ function App() {
 	function searchProduct(searchText) {
 		console.log("searching for product", searchText);
 		getProducts(searchText);
-		setCurrentCategory("stamsadgfsadhgdshrfdrah"); // setting the category so that the last category will work if clicked again.
+		setCurrentCategory("blah"); // setting the category so that the last category will work if clicked again.
 	}
 
 	return (
