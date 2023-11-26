@@ -1,44 +1,40 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import Product from "./components/Product";
 import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./components/Login";
+import NoPage from "./components/NoPage";
 import MyFooter from "./components/MyFooter";
-//import Login from "./components/Login";
-//import NoPage from "./components/NoPage";
-
-//import Register from "./components/Register";
-//import Cart from "./components/Cart";
-//import AddProduct from "./components/AddProduct";
-//import { Alert } from "react-bootstrap";
+import Addproduct from "./components/Addproduct";
+import Home from "./components/Home";
+import Cart from "./components/Cart";
 
 function App() {
-
 	const HOST_URL = "https://elad-django-back.onrender.com";
-	const [categories, setCategories] = useState([]);
-	const [currentCategory, setCurrentCategory] = useState(1);
 	const [products, setProducts] = useState([]);
-	
+	const [cateogries, setCategories] = useState([]);
+	const [filteredProducts, setFilteredProducts] = useState([""]);
 
-	useEffect(getProducts, [currentCategory]); // when loading the page for the first time - getProducts()
 	useEffect(getCategories, []); // when loading the page for the first time - getCategories()
-	// when category is clicked
-	// function productAdded() {
-	//   setCurrentCategory("asgasgasg");
-	//   setCurrentCategory("");
-	//   setMessage("Product Added Succesfuly");
-	//   setShowAlert(true);
-	// }
 
-	function clickButton(id) {
-		console.log("click!", id);
-		setCurrentCategory(id);
-	}
+	useEffect(() => {
+		// Fetch products when the component mounts
+		axios
+			.get(HOST_URL + "/?category=" + filteredProducts)
+			.then((res) => {
+				setProducts(res.data); // Update the products state
+			})
+			.catch((error) => {
+				console.error("Error fetching products:", error);
+			});
+	}, [filteredProducts]);
+
 	function getCategories() {
 		axios
-			.get(HOST_URL + "/category")
+			.get(HOST_URL + "/category/")
 			.then((response) => {
-				console.log("categories are:", response.data);
+				console.log("categories", response.data);
 				setCategories(response.data);
 			})
 			.catch((error) => {
@@ -46,83 +42,67 @@ function App() {
 			});
 	}
 
-	function getProducts(searchText = null) {
-		console.log("!!!!!!!!!!!!!!", searchText);
-		let url = HOST_URL + "/product?category=" + currentCategory;
-		if (searchText) {
-			url = HOST_URL + "/product?search=" + searchText;
-		}
+	function handleCategoryClick(categoryId) {
+		console.log(categoryId);
+		setFilteredProducts(categoryId);
+	}
+
+	function searchproduct(filterdProductname) {
+		console.log(filterdProductname);
+
 		axios
-			.get(url)
+			.get(HOST_URL + "/?search=" + filterdProductname)
 			.then((response) => {
-				console.log(response.data);
-				setProducts(response.data);
+				console.log("product", response.data);
+				if (response.data.length === 0) {
+					// Alert when no products are found
+					alert("No products found for the search");
+					// Update the products state with an empty array to clear any previous results
+					setProducts([]);
+				} else {
+					// Update the products state with the search results
+					setProducts(response.data);
+				}
 			})
 			.catch((error) => {
 				console.error("Error fetching data:", error);
+				// Handle the error, for instance, displaying an error message
 			});
-	}
 
-	// example of filter in client
-	// function searchProduct(searchText) {
-
-	//   const filteredProducts = products.filter((product) =>
-	//   product.name.toLowerCase().includes(searchText.toLowerCase())
-	// );
-	// setProducts(filteredProducts);
-	// }
-
-	function searchProduct(searchText) {
-		console.log("searching for product", searchText);
-		getProducts(searchText);
-		setCurrentCategory("blah"); // setting the category so that the last category will work if clicked again.
+		setFilteredProducts(""); // Clear the search input
 	}
 
 	return (
 		<>
 			<BrowserRouter>
-				{/* {showAlert && (
-          <Alert
-            variant="success"
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            {message}
-          </Alert>
-        )} */}
-
 				<Navbar
-					categories={categories}
-					clickButton={clickButton}
-					searchProduct={searchProduct}
+					categories={cateogries}
+					handleCategoryClick={handleCategoryClick}
+					searchproduct={searchproduct}
 				/>
 				<Routes>
 					<Route
 						path="/"
 						element={
 							<>
-								<div className="row row-cols-1 row-cols-md-3 row-cols-lg-6 g-4">
-									{products.map((product) => (
-										<div key={product.id} className="col">
-											<Product product={product} />
-										</div>
-									))}
+								<div className="container">
+									<div className="row">
+										{products.map((product) => (
+											<Product key={product.id} product={product} />
+										))}
+									</div>
 								</div>
-								<br />
 							</>
 						}
 					/>
-					{/* <Route path="/login" element={<Login />} /> */}
-					{/* <Route path="/register" element={<Register />} /> */}
-					{/* <Route path="/cart" element={<Cart />} /> */}
-					{/* <Route */}
-					{/* path="/duct" */}
-					{/* element={<AddProduct productAdded={productAdded} />} */}
-					{/* /> */}
-					{/* <Route path="*" element={<NoPage />} /> */}
+					<Route path="/login" element={<Login />} />
+					<Route path="/home" element={<Home />} />
+					<Route path="/add_product" element={<Addproduct />} />
+					<Route path="/cart" element={<Cart />} />
+					<Route path="*" element={<NoPage />} />
 				</Routes>
+				<MyFooter />
 			</BrowserRouter>
-			<MyFooter />
 		</>
 	);
 }
