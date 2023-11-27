@@ -1,90 +1,20 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { BsCart4 } from "react-icons/bs";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Navbar({ categories, clickButton, searchProduct }) {
-  const [searchText, setSearchText] = useState("");
-  const location = useLocation();
-
+const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <Link to="/" className="navbar-brand">
-        My Store
-      </Link>
-
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link
-              to="/"
-              className="nav-link"
-              onClick={() => clickButton("")}
-            >
-              All Products
-            </Link>
-          </li>
-          {categories.map((category) => (
-            <li key={category.id} className="nav-item">
-              <Link
-                to={`/products/${category.id}`}
-                className="nav-link"
-                onClick={() => clickButton(category.id)}
-              >
-                {category.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <form className="form-inline my-2 my-lg-0">
-          <input
-            className="form-control mr-sm-2"
-            type="search"
-            placeholder="Search"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <button
-            className="btn btn-outline-success my-2 my-sm-0"
-            type="button"
-            onClick={() => searchProduct(searchText)}
-          >
-            Search
-          </button>
-        </form>
-
-        <ul className="navbar-nav ml-auto">
-          {location.pathname === "/login" ? null : (
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-          )}
-          <li className="nav-item">
-            <Link className="nav-link" to="/add_product">
-              Add Product
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/cart">
-              <BsCart4 style={{ fontSize: "1.5em", color: "white" }} />
-            </Link>
-          </li>
-        </ul>
-      </div>
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/products">Products</Link>
+        </li>
+       <li>
+       <Link to="/login">Login</Link>
+       </li>
+      </ul>
     </nav>
   );
 }
