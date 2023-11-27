@@ -15,10 +15,10 @@ function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/products/:id" component={ProductDetail} />
+          <Route path="/login" component={Login} />
           <Route component={NoPage} />
-          <Route path="/login" component={Login}></Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </div>
     </Router>
   );
