@@ -12,6 +12,18 @@ function Navbar({ categories, clickButton, searchProduct }) {
         My Store
       </Link>
 
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
@@ -26,11 +38,11 @@ function Navbar({ categories, clickButton, searchProduct }) {
           {categories.map((category) => (
             <li key={category.id} className="nav-item">
               <Link
-                to="/"
+                to={`/products/${category.id}`}
                 className="nav-link"
                 onClick={() => clickButton(category.id)}
               >
-                {category.name} -({category.id})
+                {category.name}
               </Link>
             </li>
           ))}
@@ -53,7 +65,7 @@ function Navbar({ categories, clickButton, searchProduct }) {
           </button>
         </form>
 
-        <ul className="navbar-nav">
+        <ul className="navbar-nav ml-auto">
           {location.pathname === "/login" ? null : (
             <li className="nav-item">
               <Link className="nav-link" to="/login">
