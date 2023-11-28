@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const Navbar = () => {
@@ -7,10 +7,25 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [authToken, setAuthToken] = useState('');
+  const [username, setUserName] = useState('');
+  const location = useLocation();
 
   useEffect(() => {
-    
-    axios.get('https://elad-django-back.onrender.com/products/category')
+    const storedAuthToken = localStorage.getItem('authToken');
+    if (storedAuthToken) {
+      setAuthToken(storedAuthToken);
+    }
+
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
+
+  useEffect(() => {
+    // Fetch categories
+    axios.get('https://elad-django-back.onrender.com/products/category/')
       .then(response => {
         setCategories(response.data);
       })
@@ -27,55 +42,70 @@ const Navbar = () => {
       .catch(error => {
         console.error('Error fetching products:', error);
       });
-  }, []); // Empty dependency array to run the effect only once on mount
+  }, []);
 
   const handleSearch = () => {
     // Filter products based on the search query
     const filtered = products.filter(product =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())   
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredProducts(filtered);
+    
   };
+  
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/products">Products</Link>
-        </li>
-        {categories.map(category => (
-          <li key={category}>
-            <Link to={`/products?category=${category}`}>{category}</Link>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <Link className="navbar-brand" to="/">Home</Link>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <Link className="nav-link" to="/products">Products</Link>
           </li>
-        ))}
-        <li>
-          <Link to="/Login">Login</Link>
-        </li>
-        <li>
+          {categories.map(category => (
+            <li key={category}>
+              <Link className="nav-link" to={`/products?category=${category}`}>{category}</Link>
+            </li>
+          ))}
+        </ul>
+        <form className="form-inline my-2 my-lg-0">
           <input
-            type="text"
+            className="form-control mr-sm-2"
+            type="search"
+            placeholder="Search products..."
+            aria-label="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search products..."
-          />
-          <button onClick={handleSearch}>Search</button>
-        </li>
-      </ul>
+          /> 
+          <button className="btn btn-outline-success my-2 my-sm-0" type="button" onClick={handleSearch}>Search</button>
+        </form>
+        {authToken && <div className="navbar-text">Hello, {username}</div>}
+        
+      </div>
+
 
       {/* Display filtered products */}
-      <section>
+      <section className="mt-3">
         {filteredProducts.map(product => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            {/* Display other product information */}
+          <div key={product.id} className="card mb-3">
+            
           </div>
         ))}
       </section>
     </nav>
   );
-}
+};
 
 export default Navbar;

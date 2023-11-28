@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Login from './components/Login';
 import NoPage from './components/NoPage';
 import ProductDetail from './components/ProductDetail';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
