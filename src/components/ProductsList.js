@@ -10,17 +10,14 @@ const ProductsList = () => {
     // Fetch data from the API
     axios.get('https://elad-django-back.onrender.com/products')
       .then(response => {
-        // Update the state with the received products
+        
         setProducts(response.data);
       })
       .catch(error => {
         console.error('Error fetching products:', error);
       });
-  }, []); // This empty array ensures useEffect runs only once (on component mount)
-
+  }, []); 
   const handleAddToCart = () => {
-    // Logic for adding product to cart goes here
-    // For now, let's just log a message
     console.log('Product added to cart!');
   };
 
