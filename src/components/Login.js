@@ -1,32 +1,39 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log("Username:", username);
+    console.log("Password:", password);
     try {
-      // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint for login
-      const response = await axios.post('https://elad-django-back.onrender.com/token/', {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        // "https://elad-django-back.onrender.com/token/",
+       "http://127.0.0.1:8000/token/",
+        {
+          username,
+          password,
+        }
+      );
 
-      // Assuming the API response contains an 'authToken' upon successful login
-      const authToken = response.data.access;
-      
-      // Store the authToken in localStorage upon successful login
-      localStorage.setItem('authToken', authToken);
-
-      console.log('Login Successful!', response.data);
-
-      // You can redirect or perform any action here upon successful login
+      if (response.status === 200) {
+        console.log("Login successful!");
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("userName", username);
+        navigate("/Products");
+      } else {
+        console.log("Login failed!");
+        setError("Invalid credentials. Please try again.");
+      }
     } catch (err) {
-      console.error('Login Failed:', err.response.data);
-      setError('Invalid credentials. Please try again.');
+      console.error("Login Failed:", err.response.data);
+      setError("Invalid credentials. Please try again.");
     }
   };
 

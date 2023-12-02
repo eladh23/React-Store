@@ -8,7 +8,8 @@ const ProductsList = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get('https://elad-django-back.onrender.com/products')
+    // axios.get('https://elad-django-back.onrender.com/products')
+    axios.get('http://127.0.0.1:8000/products')
       .then(response => {
         
         setProducts(response.data);
