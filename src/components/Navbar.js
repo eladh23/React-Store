@@ -3,10 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsCart4 } from "react-icons/bs";
 
-const Navbar = ({ setFilteredProducts }) => {
+const Navbar = ({ products, setProducts }) => {
 	const [categories, setCategories] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [products, setProducts] = useState([]);
 	const [authToken, setAuthToken] = useState("");
 	const [username, setUserName] = useState("");
 	const location = useLocation();
@@ -32,6 +31,7 @@ const Navbar = ({ setFilteredProducts }) => {
 			.catch((error) => {
 				console.error("Error fetching categories:", error);
 			});
+
 		axios
 			.get("http://127.0.0.1:8000/products")
 			.then((response) => {
@@ -40,13 +40,13 @@ const Navbar = ({ setFilteredProducts }) => {
 			.catch((error) => {
 				console.error("Error fetching products:", error);
 			});
-	}, []);
+	}, [setProducts]); // Include setProducts in the dependency array
 
 	const handleSearch = () => {
 		const filtered = products.filter((product) =>
 			product.name.toLowerCase().includes(searchQuery.toLowerCase())
 		);
-		setFilteredProducts(filtered); // Pass filtered products to the parent component (App.js)
+		setProducts(filtered);
 	};
 
 	const handleLogout = () => {
@@ -124,6 +124,12 @@ const Navbar = ({ setFilteredProducts }) => {
 					)
 				)}
 			</div>
+			<div className="nav-item">
+				<Link className="btn btn-primary" to="/register">
+					Register
+				</Link>
+			</div>
+
 			<div className="nav-item">
 				<Link to="/cart">
 					<BsCart4 style={{ fontSize: "2em", color: "blue" }} />
