@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsCart4 } from "react-icons/bs";
 
-const Navbar = ({ products, setProducts }) => {
+const Navbar = ({  products, setProducts }) => {
 	const [categories, setCategories] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [authToken, setAuthToken] = useState("");
@@ -40,7 +40,7 @@ const Navbar = ({ products, setProducts }) => {
 			.catch((error) => {
 				console.error("Error fetching products:", error);
 			});
-	}, [setProducts]); // Include setProducts in the dependency array
+	}, [setProducts]); 
 
 	const handleSearch = () => {
 		const filtered = products.filter((product) =>
