@@ -1,9 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-function Cart() {
+const Cart = () => {
+  const storedUserName = localStorage.getItem('userName');
+
   return (
-    <div>This is Cart</div>
-  )
-}
+    <div>
+      {storedUserName ? (
+        <p>Hello, {storedUserName}! This is your cart.</p>
+      ) : (
+        <p>Please log in first.</p>
+      )}
+    </div>
+  );
+};
 
-export default Cart
+export default Cart;

@@ -1,9 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import {jwtDecode} from "jwt-decode"; 
 
 const ProductsList = ({ products, setProducts }) => {
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
+  const storedToken = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    if (storedToken) {
+      setToken(storedToken);
+    }
+//     console.log("storedToken :", storedToken)
+  }, [storedToken]);
+
+  useEffect(() => {
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setUserId(decodedToken.user_id);
+      } catch (error) {
+      //   console.error("Error decoding token:", error);
+      }
+    }
+  }, [token]);
+
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/products")
@@ -15,8 +38,30 @@ const ProductsList = ({ products, setProducts }) => {
       });
   }, [setProducts]);
 
-  const handleAddToCart = () => {
-    console.log("Product added to cart!");
+  const handleAddToCart = async (productId, userId) => {
+    try {
+      const authToken = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://127.0.0.1:8000/carts/",
+        { product: productId, user: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+	  
+      );
+	console.log(productId)
+
+      if (response.status === 200) {
+        console.log("Product added to cart!");
+      } else {
+		console.log("Failed to add product to cart");
+      }
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      console.log("Error adding product to cart");
+    }
   };
 
   return (
@@ -31,19 +76,30 @@ const ProductsList = ({ products, setProducts }) => {
                   variant="top"
                   src={`http://127.0.0.1:8000/${product.image}`}
                   alt={`Product: ${product.name}`}
-			style={{ maxWidth: '200px', height: 'auto' }}
+                  style={{ maxWidth: "200px", height: "auto" }}
                 />
                 <Card.Body>
                   <Card.Title>{product.name}</Card.Title>
                   <Card.Text>
-                    Price: ${parseFloat(product.price).toFixed(2)}
+                    <strong>Price:</strong> $
+                    {parseFloat(product.price).toFixed(2)}
                   </Card.Text>
-                  <Card.Text>Stock: {product.stock}</Card.Text>
-                  <Card.Text>Category: {product.category}</Card.Text>
-                  <Card.Text>Description: {product.description}</Card.Text>
-                  <Button variant="primary" onClick={handleAddToCart}>
-                    Add to Cart
-                  </Button>
+                  <Card.Text>
+                    <strong>Stock:</strong> {product.stock}
+                  </Card.Text>
+                  <Card.Text>
+                    <strong>Description:</strong> {product.description}
+                  </Card.Text>
+                  {storedToken && (
+                    <Button
+			    			
+                      variant="primary"
+                      onClick={() => handleAddToCart(product.id, userId)}  
+                     >
+				
+                      Add to Cart
+                    </Button>
+                  )}
                 </Card.Body>
               </Card>
             </div>

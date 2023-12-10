@@ -7,7 +7,7 @@ function Register() {
   const [age, setAge] = useState('');
   const [city, setCity] = useState('');
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [SuccessMsg, setSuccessMsg] = useState('');
 
   useEffect(() => {
     let errorTimer, successTimer;
@@ -20,9 +20,9 @@ function Register() {
     }
 
     // Clear success message after 5 seconds
-    if (successMessage) {
+    if (SuccessMsg) {
       successTimer = setTimeout(() => {
-        setSuccessMessage('');
+        setSuccessMsg('');
       }, 5000);
     }
 
@@ -31,7 +31,7 @@ function Register() {
       clearTimeout(errorTimer);
       clearTimeout(successTimer);
     };
-  }, [error, successMessage]);
+  }, [error, SuccessMsg]);
 
   const RegisterSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ function Register() {
         city,
       });
 
-      setSuccessMessage('Registration successful!'); 
+      setSuccessMsg('Registration successful!'); 
     } catch (error) {
       if (error.response && error.response.data) {
         
@@ -65,7 +65,7 @@ function Register() {
               <div className="card-body">
                 <h2 className="card-title text-center mb-4">Register Here</h2>
                 {error && <div className="alert alert-danger">{error}</div>}
-                {successMessage && <div className="alert alert-success">{successMessage}</div>}
+                {SuccessMsg && <div className="alert alert-success">{SuccessMsg}</div>}
                 <form onSubmit={RegisterSubmit}>
                   <div className="mb-3 row">
                     <label htmlFor="username" className="col-sm-4 col-form-label">
