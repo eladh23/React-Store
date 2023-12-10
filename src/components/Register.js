@@ -16,14 +16,14 @@ function Register() {
     if (error) {
       errorTimer = setTimeout(() => {
         setError('');
-      }, 5000);
+      }, 6000);
     }
 
     // Clear success message after 5 seconds
     if (SuccessMsg) {
       successTimer = setTimeout(() => {
         setSuccessMsg('');
-      }, 5000);
+      }, 6000);
     }
 
     // Clear timers when component unmounts or when messages change

@@ -9,6 +9,7 @@ import NoPage from "./components/NoPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cart from "./components/Cart";
 import Register from "./components/Register";
+import Contact from "./components/Contact";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -24,9 +25,10 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NoPage />} />
           <Route path='/register' element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
+        <Footer /> 
       </div>
-      <Footer />
     </Router>
   );
 };

@@ -13,7 +13,6 @@ const ProductsList = ({ products, setProducts }) => {
     if (storedToken) {
       setToken(storedToken);
     }
-//     console.log("storedToken :", storedToken)
   }, [storedToken]);
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const ProductsList = ({ products, setProducts }) => {
         const decodedToken = jwtDecode(token);
         setUserId(decodedToken.user_id);
       } catch (error) {
-      //   console.error("Error decoding token:", error);
       }
     }
   }, [token]);
