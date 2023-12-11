@@ -26,7 +26,7 @@ const ProductsList = ({ products, setProducts }) => {
 
 	useEffect(() => {
 		axios
-			.get("http://127.0.0.1:8000/products")
+			.get("https://elad-django-back.onrender.com//products")
 			.then((response) => {
 				setProducts(response.data);
 			})
@@ -36,35 +36,36 @@ const ProductsList = ({ products, setProducts }) => {
 	}, [setProducts]);
 
 	const handleAddToCart = async (productId, userId) => {
-    try {
-      // Retrieve the authentication token from local storage
-      const authToken = localStorage.getItem("authToken");
+    // try {
+    //   // Retrieve the authentication token from local storage
+    //   const authToken = localStorage.getItem("authToken");
   
-      // Check if the authentication token is available
-      if (!authToken) {
-        console.error("Authentication token is missing.");
-        return;
-      }
+    //   // Check if the authentication token is available
+    //   if (!authToken) {
+    //     console.error("Authentication token is missing.");
+    //     return;
+    //   }
   
-      // Make the POST request with the retrieved token
-      const response = await axios.post(
-        "http://127.0.0.1:8000/cart_items/",
-        { product: productId, user: userId },
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
+    //   // Make the POST request with the retrieved token
+    //   const response = await axios.post(
+    //     "http://127.0.0.1:8000/cart_items/",
+    //     { product: productId, user: userId },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${authToken}`,
+    //       },
+    //     }
+    //   );
   
-      if (response.status === 200) {
-        console.log("Product added to cart!");
-      } else {
-        console.log("Failed to add product to cart");
-      }
-    } catch (error) {
-      console.error("Error adding product to cart:", error);
-    }
+    //   if (response.status === 200) {
+    //     console.log("Product added to cart!");
+    //   } else {
+    //     console.log("Failed to add product to cart");
+    //   }
+    // } catch (error) {
+    //   console.error("Error adding product to cart:", error);
+    // }
+    console.log("Product added to cart!");
   };
   
   
@@ -80,7 +81,7 @@ const ProductsList = ({ products, setProducts }) => {
 							<Card className="h-100">
 								<Card.Img
 									variant="top"
-									src={`http://127.0.0.1:8000/${product.image}`}
+									src={`https://elad-django-back.onrender.com/${product.image}`}
 									alt={`Product: ${product.name}`}
 									style={{ maxWidth: "200px", height: "auto" }}
 								/>
