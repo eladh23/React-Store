@@ -30,8 +30,8 @@ const Addpro = () => {
       formData.append('price', price);
       formData.append('stock', stock);
 
-      // const response = await axios.post('http://127.0.0.1:8000/products/', formData, {
-        const response = await axios.post('https://elad-django-back.onrender.com/products/', formData, {
+      const response = await axios.post('http://127.0.0.1:8000/products/', formData, {
+        // const response = await axios.post('https://elad-django-back.onrender.com/products/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
