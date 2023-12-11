@@ -26,7 +26,7 @@ const ProductsList = ({ products, setProducts }) => {
 
 	useEffect(() => {
 		axios
-			.get("https://elad-django-back.onrender.com//products")
+			.get("https://elad-django-back.onrender.com/products/")
 			.then((response) => {
 				setProducts(response.data);
 			})
