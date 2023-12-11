@@ -24,7 +24,7 @@ const Navbar = ({ products, setProducts }) => {
 
 	useEffect(() => {
 		axios
-			.get("http://127.0.0.1:8000/products/category/")
+			.get("https://elad-django-back.onrender.com/products/category/")
 			.then((response) => {
 				setCategories(response.data);
 			})
@@ -33,7 +33,7 @@ const Navbar = ({ products, setProducts }) => {
 			});
 
 		axios
-			.get("http://127.0.0.1:8000/products")
+			.get("https://elad-django-back.onrender.com/products")
 			.then((response) => {
 				setProducts(response.data);
 			})

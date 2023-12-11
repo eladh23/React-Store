@@ -27,7 +27,7 @@ const ProductsList = ({ products, setProducts }) => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/products")
+      .get("https://elad-django-back.onrender.com/products")
       .then((response) => {
         setProducts(response.data);
       })
@@ -40,7 +40,7 @@ const ProductsList = ({ products, setProducts }) => {
     try {
       const authToken = localStorage.getItem("token");
       const response = await axios.post(
-        "http://127.0.0.1:8000/carts/",
+        "https://elad-django-back.onrender.com/carts/",
         { product: productId, user: userId },
         {
           headers: {
@@ -72,7 +72,7 @@ const ProductsList = ({ products, setProducts }) => {
               <Card className="h-100">
                 <Card.Img
                   variant="top"
-                  src={`http://127.0.0.1:8000/${product.image}`}
+                  src={`https://elad-django-back.onrender.com/${product.image}`}
                   alt={`Product: ${product.name}`}
                   style={{ maxWidth: "200px", height: "auto" }}
                 />

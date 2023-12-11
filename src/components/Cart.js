@@ -10,7 +10,7 @@ const Cart = () => {
     const fetchUserCart = async () => {
       try {
         if (storedUserId) {
-          const response = await axios.get(`http://127.0.0.1:8000/carts/${storedUserId}`);
+          const response = await axios.get(`https://elad-django-back.onrender.com/carts/${storedUserId}`);
           setCartItems(response.data); // Assuming response.data is an array of cart items
         }
       } catch (error) {

@@ -37,8 +37,8 @@ function Register() {
     e.preventDefault();
 
     try {
-      // await axios.post('https://elad-django-back.onrender.com/register/', {
-            await axios.post('http://127.0.0.1:8000/register/', {
+      await axios.post('https://elad-django-back.onrender.com/register/', {
+            //await axios.post('http://127.0.0.1:8000/register/', {
         username,
         password,
         age,
