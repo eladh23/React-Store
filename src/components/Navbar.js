@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { BsCart4 } from "react-icons/bs";
 
-const Navbar = ({  products, setProducts }) => {
+const Navbar = ({ products, setProducts }) => {
 	const [categories, setCategories] = useState([]);
 	const [searchQuery, setSearchQuery] = useState("");
 	const [authToken, setAuthToken] = useState("");
@@ -40,7 +40,7 @@ const Navbar = ({  products, setProducts }) => {
 			.catch((error) => {
 				console.error("Error fetching products:", error);
 			});
-	}, [setProducts]); 
+	}, [setProducts]);
 
 	const handleSearch = () => {
 		const filtered = products.filter((product) =>
@@ -89,6 +89,16 @@ const Navbar = ({  products, setProducts }) => {
 					))}
 				</ul>
 			</div>
+			{authToken && (
+				<div className="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul className="navbar-nav mr-auto">
+						<li className="nav-item">
+							<Link className="nav-link" to="/add-product">Add Product</Link>
+						</li>
+					</ul>
+				</div>
+			)}
+
 			<form className="form-inline my-2 my-lg-0 ml-auto d-flex">
 				<input
 					className="form-control mr-sm-2"

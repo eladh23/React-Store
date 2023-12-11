@@ -88,6 +88,9 @@ const ProductsList = ({ products, setProducts }) => {
                   <Card.Text>
                     <strong>Description:</strong> {product.description}
                   </Card.Text>
+                  <Card.Text>
+                    <strong>Category:</strong> {product.category}
+                  </Card.Text>
                   {storedToken && (
                     <Button
 			    			

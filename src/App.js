@@ -10,6 +10,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Cart from "./components/Cart";
 import Register from "./components/Register";
 import Contact from "./components/Contact";
+import Addpro from "./components/AddPro";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -21,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<ProductsList products={products} setProducts={setProducts} />} />
+          <Route path="/add-product" element={<Addpro />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NoPage />} />

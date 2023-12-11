@@ -7,38 +7,35 @@ const Login = () => {
 	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
-    
+
 	const handleLogin = async (e) => {
-	  e.preventDefault();
-	  console.log("Username:", username);
-	  console.log("Password:", password);
-	  try {
-	    const response = await axios.post(
-		"http://127.0.0.1:8000/token/",
-		{
-		  username,
-		  password,
+		e.preventDefault();
+		console.log("Username:", username);
+		console.log("Password:", password);
+		try {
+			const response = await axios.post("http://127.0.0.1:8000/token/", {
+				username,
+				password,
+			});
+			const token = response.data.access;
+
+			if (response.status === 200 && token) {
+				console.log("Login successful!");
+				localStorage.setItem("authToken", token); // Store the access token
+				console.log(token);
+				localStorage.setItem("userName", username);
+				setError(""); // Reset error state on successful login
+				navigate("/Products");
+			} else {
+				console.log("Login failed!");
+				setError("Invalid credentials. Please try again.");
+			}
+		} catch (err) {
+			console.error("Login Failed:", err.response.data);
+			setError("Invalid credentials. Please try again.");
 		}
-	    );
-	    const token = response.data.access;
-    
-	    if (response.status === 200 && token) {
-		console.log("Login successful!");
-		localStorage.setItem("authToken", token); // Store the access token
-		console.log(token);
-		localStorage.setItem("userName", username);
-		setError(""); // Reset error state on successful login
-		navigate("/Products");
-	    } else {
-		console.log("Login failed!");
-		setError("Invalid credentials. Please try again.");
-	    }
-	  } catch (err) {
-	    console.error("Login Failed:", err.response.data);
-	    setError("Invalid credentials. Please try again.");
-	  }
 	};
-    
+
 	return (
 		<div className="container mt-5">
 			<div className="row justify-content-center">

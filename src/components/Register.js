@@ -12,14 +12,14 @@ function Register() {
   useEffect(() => {
     let errorTimer, successTimer;
 
-    // Clear error message after 5 seconds
+    // Clear error message after 6 seconds
     if (error) {
       errorTimer = setTimeout(() => {
         setError('');
       }, 6000);
     }
 
-    // Clear success message after 5 seconds
+    // Clear success message after 6 seconds
     if (SuccessMsg) {
       successTimer = setTimeout(() => {
         setSuccessMsg('');
