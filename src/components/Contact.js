@@ -11,7 +11,7 @@ const Contact = () => {
       <ul>
         <li>Email: eladelad121212@gmail.com</li>
         <li>Phone: 058-7200800</li>
-        <li>Github: <Link to="https://github.com/eladh23">GitHub Profile</Link></li>
+        <li>Github: <Link to="https://github.com/eladh23">eladh23- GitHub Profile</Link></li>
         <li>Elad is my name :)</li>
       </ul>
       <p>

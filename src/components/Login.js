@@ -22,10 +22,10 @@ const Login = () => {
 
 			if (response.status === 200 && token) {
 				console.log("Login successful!");
-				localStorage.setItem("authToken", token); // Store the access token
+				localStorage.setItem("authToken", token); 
 				console.log(token);
 				localStorage.setItem("userName", username);
-				setError(""); // Reset error state on successful login
+				setError("");
 				navigate("/Products");
 			} else {
 				console.log("Login failed!");

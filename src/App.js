@@ -20,7 +20,7 @@ const App = () => {
       <div className="App">
         <Navbar products={products} setProducts={setProducts} />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/React-Store" element={<Home />} />
           <Route path="/products" element={<ProductsList products={products} setProducts={setProducts} />} />
           <Route path="/add-product" element={<Addpro />} />
           <Route path="/Login" element={<Login />} />
